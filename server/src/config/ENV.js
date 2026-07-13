@@ -12,6 +12,7 @@ const ENV = {
   ADMIN_NAME: process.env.ADMIN_NAME,
   ADMIN_EMAIL: process.env.ADMIN_EMAIL,
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+  JWT_SECRET: process.env.JWT_SECRET,
 };
 
 Object.entries(ENV).forEach(([key, value]) => {
