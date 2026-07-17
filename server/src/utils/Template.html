@@ -1,0 +1,306 @@
+<!doctype html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
+    <title>Welcome to ShelfOps</title>
+
+    <style>
+      body,
+      table,
+      td,
+      a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100% !important;
+        background-color: #f2f4f7;
+      }
+
+      @media screen and (max-width: 600px) {
+        .email-container {
+          width: 100% !important;
+        }
+        .fluid-padding {
+          padding-left: 24px !important;
+          padding-right: 24px !important;
+        }
+        .logo-text {
+          font-size: 20px !important;
+        }
+      }
+
+      a.reset-btn:hover {
+        background-color: #d63a00 !important;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f2f4f7">
+    <!-- Preheader (hidden preview text shown in inbox list) -->
+    <div
+      style="
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        mso-hide: all;
+        font-size: 1px;
+        line-height: 1px;
+        color: #f2f4f7;
+      "
+    >
+      Your ShelfOps account is ready — set your password to get started.
+    </div>
+
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #f2f4f7"
+    >
+      <tr>
+        <td align="center" style="padding: 40px 16px">
+          <table
+            role="presentation"
+            class="email-container"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="width: 600px; max-width: 600px"
+          >
+            <!-- Logo / brand row, sits above the card -->
+            <tr>
+              <td align="center" style="padding: 0 0 24px 0">
+                <span
+                  class="logo-text"
+                  style="
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 22px;
+                    font-weight: 800;
+                    letter-spacing: 0.5px;
+                    color: #1a1a1a;
+                  "
+                >
+                  Shelf<span style="color: #ff4500">Ops</span>
+                </span>
+              </td>
+            </tr>
+
+            <!-- Card -->
+            <tr>
+              <td
+                style="
+                  background-color: #ffffff;
+                  border-radius: 12px;
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+                "
+              >
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                >
+                  <!-- Accent top bar -->
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ff4500;
+                        height: 6px;
+                        line-height: 6px;
+                        font-size: 0;
+                        border-radius: 12px 12px 0 0;
+                      "
+                    >
+                      &nbsp;
+                    </td>
+                  </tr>
+
+                  <!-- Heading -->
+                  <tr>
+                    <td
+                      class="fluid-padding"
+                      style="
+                        padding: 36px 40px 8px 40px;
+                        font-family: Arial, Helvetica, sans-serif;
+                      "
+                    >
+                      <h1
+                        style="
+                          margin: 0;
+                          font-size: 22px;
+                          line-height: 1.3;
+                          color: #1a1a1a;
+                          font-weight: 700;
+                        "
+                      >
+                        Welcome, {{username}} 👋
+                      </h1>
+                    </td>
+                  </tr>
+
+                  <!-- Body copy -->
+                  <tr>
+                    <td
+                      class="fluid-padding"
+                      style="
+                        padding: 8px 40px 0 40px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 15px;
+                        line-height: 1.6;
+                        color: #444444;
+                      "
+                    >
+                      <p style="margin: 0 0 16px 0">
+                        Your ShelfOps account has been created. Before you get
+                        started, you'll need to set a password.
+                      </p>
+                      <p style="margin: 0 0 28px 0">
+                        Click the button below to create your password. This
+                        link is valid for the next 24 hours.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- CTA button -->
+                  <tr>
+                    <td
+                      class="fluid-padding"
+                      align="left"
+                      style="padding: 0 40px 32px 40px"
+                    >
+                      <table
+                        role="presentation"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            align="center"
+                            bgcolor="#ff4500"
+                            style="border-radius: 8px"
+                          >
+                            <a
+                              href="{{addNewPassword}}"
+                              class="reset-btn"
+                              style="
+                                display: inline-block;
+                                padding: 14px 28px;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 15px;
+                                font-weight: 700;
+                                color: #ffffff;
+                                text-decoration: none;
+                                border-radius: 8px;
+                              "
+                            >
+                              Set your password
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Divider -->
+                  <tr>
+                    <td class="fluid-padding" style="padding: 0 40px">
+                      <table
+                        role="presentation"
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              border-top: 1px solid #eeeeee;
+                              font-size: 0;
+                              line-height: 0;
+                            "
+                          >
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Fallback link + help text -->
+                  <tr>
+                    <td
+                      class="fluid-padding"
+                      style="
+                        padding: 24px 40px 36px 40px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 13px;
+                        line-height: 1.6;
+                        color: #888888;
+                      "
+                    >
+                      <p style="margin: 0">
+                        Didn't request this account? You can safely ignore this
+                        email.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Footer, outside the card -->
+            <tr>
+              <td
+                align="center"
+                style="
+                  padding: 28px 20px 0 20px;
+                  font-family: Arial, Helvetica, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #999999;
+                "
+              >
+                <p style="margin: 0 0 6px 0">
+                  &copy; 2026 ShelfOps Enterprise Ltd. All rights reserved.
+                </p>
+                <p style="margin: 0">
+                  This is an automated message, please don't reply directly to
+                  this email.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

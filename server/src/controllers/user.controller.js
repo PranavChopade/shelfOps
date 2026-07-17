@@ -4,6 +4,8 @@ import { User } from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 import ENV from '../config/ENV.js';
 import ApiResponse from '../utils/ApiResponce.js';
+import transporter, { TemplateReader } from '../utils/transporter.js';
+import bcrypt from 'bcryptjs';
 
 export const login = AsyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -33,8 +35,8 @@ export const login = AsyncHandler(async (req, res) => {
 });
 
 export const addUser = AsyncHandler(async (req, res) => {
-  const userRole = req.user.role;
   const { name, email, role } = req.body;
+  const userRole = req.user.role;
   if (!name || !email || !role) {
     throw new ApiError(400, 'all fields are required');
   }
@@ -46,18 +48,46 @@ export const addUser = AsyncHandler(async (req, res) => {
   }
   const user = await User.findOne({ email });
   if (user) {
-    throw new ApiError(400, 'user already exists');
+    throw new ApiError(400, 'user with this email is already exists');
   }
   let password = Math.random().toString(32).slice(2, 10);
+  let resetToken = Math.random().toString(32).slice(2, 10);
+  const hashedResetToken = await bcrypt.hash(resetToken, 10);
+  let resetTokenExpire = Date.now() + 2 * 24 * 60 * 60 * 1000;
   const newUser = await User.create({
     name,
     email,
     role,
     password,
-    isActive: true,
+    resetToken: hashedResetToken,
+    isActive: false,
+    resetTokenExpire,
   });
-  if (!newUser) {
-    throw new ApiError(400, 'failed to create user');
+
+  let html = TemplateReader();
+  html = html
+    .replace('{{username}}', `${name}`)
+    .replace(
+      '{{addNewPassword}}',
+      `http://localhost:5173/new_password?resetToken=${resetToken}`,
+    );
+
+  let mailOptions = {
+    from: ENV.ADMIN_EMAIL,
+    to: newUser.email,
+    subject: 'Welcome to ShelfOps',
+    html: html,
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.messageId);
+  } catch (emailError) {
+    console.error('Email send failed:', emailError);
+    throw new ApiError(
+      500,
+      'Failed to send welcome email: ' + emailError.message,
+    );
   }
   const userObject = newUser.toObject();
   delete userObject.password;
@@ -66,6 +96,11 @@ export const addUser = AsyncHandler(async (req, res) => {
     .json(new ApiResponse(userObject, 'user created successfully'));
 });
 
+export const getProfile = AsyncHandler(async (req, res) => {
+  res
+    .status(200)
+    .json(new ApiResponse(req.user, 'profile fetched successfully'));
+});
 export const logout = AsyncHandler(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
@@ -73,4 +108,35 @@ export const logout = AsyncHandler(async (req, res) => {
     secure: ENV.NODE_ENV === 'production',
   });
   res.status(200).json(new ApiResponse(null, 'logged out successfully'));
+});
+
+export const resetPassword = AsyncHandler(async (req, res) => {
+  const { newPassword, resetToken } = req.body;
+  if (!newPassword || !resetToken) {
+    throw new ApiError(400, 'all fields are required');
+  }
+
+  // Find user by the stored hashed reset token
+  const users = await User.find({ resetToken: { $exists: true } });
+  let user = null;
+  for (const u of users) {
+    const isMatch = await bcrypt.compare(resetToken, u.resetToken);
+    if (isMatch) {
+      user = u;
+      break;
+    }
+  }
+
+  if (!user) {
+    throw new ApiError(404, 'user not found');
+  }
+  if (!user.resetTokenExpire || user.resetTokenExpire < Date.now()) {
+    throw new ApiError(403, 'reset token expired , contact administrator');
+  }
+  user.password = newPassword;
+  user.resetToken = undefined;
+  user.resetTokenExpire = undefined;
+  user.isActive = true;
+  await user.save();
+  res.status(200).json(new ApiResponse(null, 'Password updated successfully'));
 });
